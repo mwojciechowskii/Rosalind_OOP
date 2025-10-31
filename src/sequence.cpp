@@ -1,4 +1,5 @@
 #include "sequence.hpp"
+#include <algorithm>
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -89,4 +90,32 @@ std::string Sequence::Transcribe(){
 void Sequence::PrintRNA(std::string RNAseq){
 
 	std::cout << RNAseq << std::endl;
+}
+
+std::string Sequence::ComplementDNA(){
+
+	std::string CompSeq;
+	for (char nt : Seq){
+
+		switch (nt) {
+			default:
+			break;
+			case 'A': case 'a':
+				CompSeq.push_back('T');
+				break;
+
+			case 'T': case 't':
+				CompSeq.push_back('A');
+				break;
+			case 'G': case 'g':
+				CompSeq.push_back('C');
+				break;
+			case 'C': case 'c':
+				CompSeq.push_back('G');
+				break;
+			}	
+	}
+	std::reverse(CompSeq.begin(), CompSeq.end());
+	return CompSeq;
+
 }

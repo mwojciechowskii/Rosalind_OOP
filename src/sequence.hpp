@@ -20,4 +20,5 @@ class Sequence{
 		void PrintStatistics(const Sequence::NtAmount &ntamount);
 		std::string Transcribe();
 		void PrintRNA(std::string RNAseq);
+		std::string ComplementDNA();
 };
