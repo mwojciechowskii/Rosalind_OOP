@@ -1,0 +1,16 @@
+#pragma once
+
+#include "sequence.hpp"
+#include <RNA.hpp>
+#include <string>
+
+class DNA: protected Sequence{
+	private:
+	std::string RunTranscript();
+
+public:
+	using Sequence::Sequence;
+	~DNA();
+	RNA Transcribe();
+
+};

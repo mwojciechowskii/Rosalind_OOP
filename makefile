@@ -6,8 +6,8 @@ SRCS       := $(workdir)/src/main.cpp \
 OBJS       := $(patsubst $(workdir)/src/%.cpp,$(workdir)/build/%.o,$(SRCS))
 TARGET     ?= myapp
 
-CXXFLAGS_DEBUG   := -g -O0 -std=c++14 -Wall
-CXXFLAGS_RELEASE := -O2 -std=c++14 -Wall
+CXXFLAGS_DEBUG   := -g -O0 -std=c++17 -Wall
+CXXFLAGS_RELEASE := -O2 -std=c++17 -Wall
 
 CXXFLAGS := $(CXXFLAGS_RELEASE)
 

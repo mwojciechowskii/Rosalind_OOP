@@ -1,15 +1,16 @@
 #include "sequence.hpp"
 #include <iostream>
 
+//TODO
+//private rna and dna strings with publicly visible string
 std::string dnaFile = "./data/rosalind_revc.txt";
 
 int main(){
 
 	Sequence MyObject(dnaFile);
-	MyObject.PrintStatistics(MyObject.CntNt());
-	MyObject.PrintRNA(MyObject.Transcribe());
-	std::cout << MyObject.ComplementDNA() << std::endl;
+	MyObject.CntNt();
 
+	std::cout << *MyObject.ntAmount.t << std::endl;
 
 	return 0;
 }
