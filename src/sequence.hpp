@@ -7,6 +7,7 @@ class Sequence{
 
 	protected:
 		static std::string file_read(const std::string &file);
+		std::string Seq_ID;
 		std::string Seq;
 	public:
 
@@ -22,4 +23,5 @@ class Sequence{
 		NtAmount ntAmount;
 		virtual NtAmount CntNt();
 		std::string ComplementDNA();
+		size_t HammingDist(const Sequence& other);
 };

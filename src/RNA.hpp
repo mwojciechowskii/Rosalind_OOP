@@ -1,11 +1,11 @@
 #pragma once
 
-#include <sequence.hpp>
+#include "sequence.hpp"
 
 class RNA: protected Sequence{
 public:
 	using Sequence::Sequence;
-	~RNA();
+	~RNA() = default;
 	NtAmount CntNt() override;	
 
 };

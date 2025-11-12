@@ -3,14 +3,17 @@
 
 //TODO
 //private rna and dna strings with publicly visible string
-std::string dnaFile = "./data/rosalind_revc.txt";
+std::string dnaFile = "./data/seq1ham.txt";
+std::string file2 = "./data/seq2ham.txt";
+
 
 int main(){
 
 	Sequence MyObject(dnaFile);
-	MyObject.CntNt();
+	Sequence New(file2);
 
-	std::cout << *MyObject.ntAmount.t << std::endl;
+	std::cout << MyObject.HammingDist(New) << std::endl;
+
 
 	return 0;
 }

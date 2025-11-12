@@ -1,5 +1,5 @@
 #include "DNA.hpp"
-#include <RNA.hpp>
+#include "RNA.hpp"
 #include <string>
 
 std::string DNA::RunTranscript(){

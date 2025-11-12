@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sequence.hpp"
-#include <RNA.hpp>
+#include "RNA.hpp"
 #include <string>
 
 class DNA: protected Sequence{
@@ -10,7 +10,7 @@ class DNA: protected Sequence{
 
 public:
 	using Sequence::Sequence;
-	~DNA();
+	~DNA() = default;
 	RNA Transcribe();
 
 };

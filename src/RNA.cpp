@@ -1,5 +1,5 @@
 #include "RNA.hpp"
-#include <sequence.hpp>
+#include "sequence.hpp"
 
 Sequence::NtAmount RNA::CntNt(){
 

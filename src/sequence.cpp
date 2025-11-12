@@ -1,5 +1,6 @@
 #include "sequence.hpp"
 #include <algorithm>
+#include <cstddef>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -59,7 +60,6 @@ std::string Sequence::ComplementDNA(){
 			case 'A': case 'a':
 				CompSeq.push_back('T');
 				break;
-
 			case 'T': case 't':
 				CompSeq.push_back('A');
 				break;
@@ -73,5 +73,14 @@ std::string Sequence::ComplementDNA(){
 	}
 	std::reverse(CompSeq.begin(), CompSeq.end());
 	return CompSeq;
+}
 
+size_t Sequence::HammingDist(const Sequence& other){
+
+	size_t len = std::min(Seq.size(), other.Seq.size());
+	size_t dist = 0;
+	for (size_t i =0; i < len; i++){
+		dist += (Seq[i] != other.Seq[i]);
+	}
+	return dist;
 }

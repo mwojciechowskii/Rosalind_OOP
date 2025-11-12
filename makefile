@@ -2,7 +2,9 @@ workdir :=$(shell pwd)
 CXX        := g++
 INCLUDES   :=
 SRCS       := $(workdir)/src/main.cpp \
-			  $(workdir)/src/sequence.cpp
+			  $(workdir)/src/sequence.cpp \
+			  $(workdir)/src/DNA.cpp \
+			  $(workdir)/src/RNA.cpp
 OBJS       := $(patsubst $(workdir)/src/%.cpp,$(workdir)/build/%.o,$(SRCS))
 TARGET     ?= myapp
 
