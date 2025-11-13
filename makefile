@@ -4,12 +4,13 @@ INCLUDES   :=
 SRCS       := $(workdir)/src/main.cpp \
 			  $(workdir)/src/sequence.cpp \
 			  $(workdir)/src/DNA.cpp \
-			  $(workdir)/src/RNA.cpp
+			  $(workdir)/src/RNA.cpp \
+			  $(workdir)/src/fileReader.cpp
 OBJS       := $(patsubst $(workdir)/src/%.cpp,$(workdir)/build/%.o,$(SRCS))
 TARGET     ?= myapp
 
-CXXFLAGS_DEBUG   := -g -O0 -std=c++17 -Wall
-CXXFLAGS_RELEASE := -O2 -std=c++17 -Wall
+CXXFLAGS_DEBUG   := -g -O0 -std=c++20 -Wall
+CXXFLAGS_RELEASE := -O2 -std=c++20 -Wall
 
 CXXFLAGS := $(CXXFLAGS_RELEASE)
 

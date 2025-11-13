@@ -2,7 +2,7 @@
 
 #include "sequence.hpp"
 
-class RNA: protected Sequence{
+class RNA: public Sequence{
 public:
 	using Sequence::Sequence;
 	~RNA() = default;

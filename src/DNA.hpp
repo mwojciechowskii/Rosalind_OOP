@@ -4,7 +4,7 @@
 #include "RNA.hpp"
 #include <string>
 
-class DNA: protected Sequence{
+class DNA: public Sequence{
 	private:
 	std::string RunTranscript();
 
