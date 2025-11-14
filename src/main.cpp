@@ -19,7 +19,7 @@ int main(){
 	}
 	const auto maxGC = Sequence::HighestGC(opened_seq);
 
-	std::cout << maxGC->id() << std::endl;
+	std::cout << maxGC->get_id() << std::endl;
     std::cout << std::fixed << std::setprecision(6) << maxGC->GCcontent() << '\n';
 
 	return 0;

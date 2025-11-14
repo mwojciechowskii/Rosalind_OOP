@@ -19,29 +19,33 @@ std::string Sequence::file_read(const std::string &file) {
 	return seq.str();
 }
 
-Sequence::NtAmount Sequence::CntNt (){
+Sequence::NtAmount Sequence::CntNt () const{
 
-	ntAmount.t = 0;
+	if (NtCounted){
+		return ntAmount;
+	}
 
-	for (char &Nt : Seq){
-
+	Type seqType = getType();
+	if (seqType == Type::DNA) {
+		ntAmount.t = 0;
+	} else if(seqType == Type::RNA){
+		ntAmount.u = 0;
+	}
+	for (char Nt : Seq){
 		switch (Nt){
 			default:
-				break;
+				std::cerr << "Invalid nucleotide found: " << Nt << "in: " << Seq_ID << std::endl; break;
 			case 'T': case 't' :
-				++*ntAmount.t;
-				break;
+				++*ntAmount.t; break;
 			case 'A': case 'a':
-				++ntAmount.a;
-				break;
+				++ntAmount.a; break;
 			case 'G': case 'g':
-				++ntAmount.g;
-				break;
+				++ntAmount.g; break;
 			case 'C': case 'c':
-				++ntAmount.c;
-				break;
+				++ntAmount.c; break;
 		}
 	}
+	NtCounted = true;
 	return ntAmount;
 }
 
@@ -82,6 +86,7 @@ size_t Sequence::HammingDist(const Sequence& other){
 }
 float Sequence::GCcontent () const{
 
+	CntNt();
 	std::size_t sum = ntAmount.a;
 	std::size_t GCsum = ntAmount.c + ntAmount.g;
 	if (ntAmount.t.has_value()){
@@ -93,11 +98,21 @@ float Sequence::GCcontent () const{
 	return (static_cast<float>(GCsum)/sum) * 100.0f;
 }
 
-//template<typename SeqType>
-//static const SeqType* HighestGC(const std::vector<std::unique_ptr<SeqType>>& sequences){
-//	
-//	if(sequences.empty())
-//		return nullptr;
-//	auto maxGCval = std::max_element(sequences.begin(), sequences.end(), CompareGC<SeqType>);
-//	return maxGCval->get();
-//}
+std::vector<size_t> Sequence::FindMotiff(const std::string& motif) const{
+
+	std::vector<size_t> MottifIndexes;
+	
+	if (motif.empty() || motif.length() > Seq.length())
+		return MottifIndexes;
+	
+	size_t pos = 0;
+	while ((pos == Seq.find(motif, pos)) != std::string::npos) {
+		
+		MottifIndexes.push_back(pos + 1);
+		++pos;
+	}
+	return MottifIndexes;
+}
+std::vector<size_t> Sequence::FindMotiff(const Sequence& motif) const{
+	return FindMotiff(motif.get_seq());
+}

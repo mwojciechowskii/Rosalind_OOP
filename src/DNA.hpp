@@ -11,6 +11,7 @@ class DNA: public Sequence{
 public:
 	using Sequence::Sequence;
 	~DNA() = default;
-	RNA Transcribe();
+	std::unique_ptr<RNA> Transcribe();
+	Type getType() const override {return Type::DNA;}
 
 };

@@ -6,6 +6,5 @@ class RNA: public Sequence{
 public:
 	using Sequence::Sequence;
 	~RNA() = default;
-	NtAmount CntNt() override;	
-
+	Type getType() const override {return Type::RNA;}
 };
