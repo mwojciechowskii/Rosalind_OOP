@@ -18,9 +18,9 @@ class Sequence{
 
 	public:
 
-		Sequence(const std::string &file): Seq(file_read(file)) {}
-		Sequence(const std::string &&seq_id, std::string &&sequence) : Seq_ID(std::move(seq_id)), Seq(std::move(sequence)) {};
-		Sequence(const std::string &&seq_id, std::string &&id_info, std::string &&sequence) : Seq_ID(std::move(seq_id)), ID_info(std::move(id_info)), Seq(std::move(sequence)) {};
+		Sequence(std::string &file): Seq(file_read(file)) {}
+		Sequence(std::string &&seq_id, std::string &&sequence) : Seq_ID(std::move(seq_id)), Seq(std::move(sequence)) {};
+		Sequence(std::string &&seq_id, std::string &&id_info, std::string &&sequence) : Seq_ID(std::move(seq_id)), ID_info(std::move(id_info)), Seq(std::move(sequence)) {};
 		virtual ~Sequence() = default;
 		const std::string& seq() const { return Seq; }
 		const std::string& id() const { return Seq_ID; }
