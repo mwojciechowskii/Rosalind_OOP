@@ -101,18 +101,18 @@ float Sequence::GCcontent () const{
 std::vector<size_t> Sequence::FindMotiff(const std::string& motif) const{
 
 	std::vector<size_t> MottifIndexes;
-	
 	if (motif.empty() || motif.length() > Seq.length())
 		return MottifIndexes;
 	
 	size_t pos = 0;
-	while ((pos == Seq.find(motif, pos)) != std::string::npos) {
-		
+	while ((pos = Seq.find(motif, pos)) != std::string::npos) {
+
 		MottifIndexes.push_back(pos + 1);
 		++pos;
 	}
 	return MottifIndexes;
 }
+
 std::vector<size_t> Sequence::FindMotiff(const Sequence& motif) const{
 	return FindMotiff(motif.get_seq());
 }

@@ -5,7 +5,8 @@ SRCS       := $(workdir)/src/main.cpp \
 			  $(workdir)/src/sequence.cpp \
 			  $(workdir)/src/DNA.cpp \
 			  $(workdir)/src/RNA.cpp \
-			  $(workdir)/src/fileReader.cpp
+			  $(workdir)/src/fileReader.cpp \
+			  $(workdir)/src/Solution.cpp
 OBJS       := $(patsubst $(workdir)/src/%.cpp,$(workdir)/build/%.o,$(SRCS))
 TARGET     ?= myapp
 
