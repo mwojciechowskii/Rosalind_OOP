@@ -13,8 +13,7 @@ class Sequence{
 		std::string Seq_ID;
 		std::string ID_info;
 		std::string Seq;
-		template<class SeqType>
-		static bool CompareGC(const std::unique_ptr<SeqType>& seqA, const std::unique_ptr<SeqType>& seqB) {return seqA->GCcontent() < seqB->GCcontent();}
+		static bool CompareGC(const std::unique_ptr<Sequence>& seqA, const std::unique_ptr<Sequence>& seqB) {return seqA->GCcontent() < seqB->GCcontent();}
 
 	public:
 
@@ -43,11 +42,5 @@ class Sequence{
 		std::vector<size_t> FindMotiff(const std::string& motif) const;
 		std::vector<size_t> FindMotiff(const Sequence& motif) const;
 		
-		template<typename SeqType>
-		static const SeqType* HighestGC(const std::vector<std::unique_ptr<SeqType>>& sequences){
-			if(sequences.empty())
-				return nullptr;
-			auto maxGCval = std::max_element(sequences.begin(), sequences.end(), CompareGC<SeqType>);
-			return maxGCval->get();
-		}
+		static const Sequence* HighestGC(const std::vector<std::unique_ptr<Sequence>>& sequences);
 };

@@ -3,6 +3,21 @@
 #include "fileReader.hpp"
 #include <iomanip>
 #include <iostream>
+#include <memory>
+#include "sequence.hpp"
+
+using Type = Sequence::Type;
+
+void Solution::HammingDist(){
+
+	std::string file1 = "./data/seq1ham.txt";
+	std::string file2 = "./data/seq2ham.txt";
+
+	auto seqs = std::make_unique<DNA>(file1); // vector<unique_ptr<Sequence>>
+	auto seqs2 = std::make_unique<DNA>(file2); 
+
+	std::cout << seqs->HammingDist(*seqs2) << '\n';
+}
 
 void Solution::GCcount(){
 
@@ -10,7 +25,7 @@ void Solution::GCcount(){
 	https://rosalind.info/problems/gc/ 
 	*/
 	std::string file = "./data/rosalind_gc.txt";
-	auto opened_seq = fileReader::ReadFile<DNA>(file);
+	auto opened_seq = fileReader::ReadFile(file, Type::DNA);
 	for (auto &sequence: opened_seq){
 
 		std::cout << std::fixed << std::setprecision(6);

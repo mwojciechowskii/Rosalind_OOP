@@ -84,6 +84,7 @@ size_t Sequence::HammingDist(const Sequence& other){
 	}
 	return dist;
 }
+
 float Sequence::GCcontent () const{
 
 	CntNt();
@@ -115,4 +116,12 @@ std::vector<size_t> Sequence::FindMotiff(const std::string& motif) const{
 
 std::vector<size_t> Sequence::FindMotiff(const Sequence& motif) const{
 	return FindMotiff(motif.get_seq());
+}
+
+const Sequence* Sequence::HighestGC(const std::vector<std::unique_ptr<Sequence>>& sequences){
+
+	if(sequences.empty())
+		return nullptr;
+	auto maxGCval = std::max_element(sequences.begin(), sequences.end(), CompareGC);
+	return maxGCval->get();
 }

@@ -20,10 +20,16 @@ std::shared_ptr<std::ifstream> fileReader::openFile(const std::string &file){
 	return op_file;
 }
 
-template<typename SeqType>
-std::vector<std::unique_ptr<SeqType>> fileReader::ReadFile(const std::string &file){
+std::unique_ptr<Sequence> fileReader::createFromType(Sequence::Type type, std::string id, std::string id_info, std::string seq){
 
-	std::vector<std::unique_ptr<SeqType>> results;
+if (type == Sequence::Type::DNA) return std::make_unique<DNA>(std::move(id), std::move(id_info), std::move(seq));
+if (type == Sequence::Type::RNA) return std::make_unique<RNA>(std::move(id), std::move(id_info), std::move(seq));
+return nullptr;
+}
+//template<typename Sequence>
+std::vector<std::unique_ptr<Sequence>> fileReader::ReadFile(const std::string &file, Sequence::Type type){
+
+	std::vector<std::unique_ptr<Sequence>> results;
 	auto op_file = fileReader::openFile(file);
 
 	if (!op_file)
@@ -36,7 +42,7 @@ std::vector<std::unique_ptr<SeqType>> fileReader::ReadFile(const std::string &fi
 		if (line.empty()) continue;
 		if (line.starts_with('>')){
 			if (inSeq){
-				results.push_back(std::make_unique<SeqType>(std::move(id), std::move(id_info), std::move(seq)));
+				results.push_back(createFromType(type, std::move(id), std::move(id_info), std::move(seq)));
 				seq.clear();
 			}
 			std::string header = line.substr(1);
@@ -57,15 +63,16 @@ std::vector<std::unique_ptr<SeqType>> fileReader::ReadFile(const std::string &fi
 		}
 	}
 	if (inSeq){
-		results.push_back(std::make_unique<SeqType>(std::move(id), std::move(id_info), std::move(seq)));
+		results.push_back(createFromType(type, std::move(id), std::move(id_info), std::move(seq)));
 	}
 	return results;
 }
-template std::vector<std::unique_ptr<DNA>> 
-fileReader::ReadFile<DNA>(const std::string&);
 
-template std::vector<std::unique_ptr<RNA>> 
-fileReader::ReadFile<RNA>(const std::string&);
+//template std::vector<std::unique_ptr<DNA>> 
+//fileReader::ReadFile<DNA>(const std::string&);
+//
+//template std::vector<std::unique_ptr<RNA>> 
+//fileReader::ReadFile<RNA>(const std::string&);
 
 
 std::vector<size_t> fileReader::ReadWithMotiff(const std::string &file, Sequence::Type type){
