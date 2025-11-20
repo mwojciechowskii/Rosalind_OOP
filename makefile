@@ -11,7 +11,7 @@ SRCS       := $(workdir)/src/main.cpp \
 OBJS       := $(patsubst $(workdir)/src/%.cpp,$(workdir)/build/%.o,$(SRCS))
 TARGET     ?= myapp
 
-CXXFLAGS_DEBUG   := -g -fsanitize=address,undefined -fno-omit-frame-pointer -O0 -std=c++20 -Wall
+CXXFLAGS_DEBUG   := -g -fsanitize=address,undefined -O0 -std=c++20 -Wall
 CXXFLAGS_RELEASE := -O2 -std=c++20 -Wall
 
 CXXFLAGS := $(CXXFLAGS_RELEASE)
