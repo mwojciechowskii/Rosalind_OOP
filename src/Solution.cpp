@@ -10,10 +10,14 @@ using Type = Sequence::Type;
 
 void Solution::HammingDist(){
 
+
+	/* Problem:
+	https://rosalind.info/problems/hamm/
+	*/
 	std::string file1 = "./data/seq1ham.txt";
 	std::string file2 = "./data/seq2ham.txt";
 
-	auto seqs = std::make_unique<DNA>(file1); // vector<unique_ptr<Sequence>>
+	auto seqs = std::make_unique<DNA>(file1);
 	auto seqs2 = std::make_unique<DNA>(file2); 
 
 	std::cout << seqs->HammingDist(*seqs2) << '\n';
