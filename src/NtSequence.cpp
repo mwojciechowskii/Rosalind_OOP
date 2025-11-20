@@ -1,25 +1,8 @@
-#include "sequence.hpp"
+#include "NtSequence.hpp"
 #include <algorithm>
-#include <cstddef>
 #include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
 
-
-std::string Sequence::file_read(const std::string &file) {
-	std::ifstream op_file(file);
-	if (!op_file.is_open()) {
-		std::cerr << "Error opening file " << file << std::endl;
-		return "";
-	}
-
-	std::ostringstream seq;
-	seq << op_file.rdbuf();
-	return seq.str();
-}
-
-Sequence::NtAmount Sequence::CntNt () const{
+NtSequence::NtAmount NtSequence::CntNt () const{
 
 	if (NtCounted){
 		return ntAmount;
@@ -49,7 +32,7 @@ Sequence::NtAmount Sequence::CntNt () const{
 	return ntAmount;
 }
 
-std::string Sequence::Complement(){
+std::string NtSequence::Complement(){
 
 	std::string CompSeq;
 	for (char nt : Seq){
@@ -75,7 +58,7 @@ std::string Sequence::Complement(){
 	return CompSeq;
 }
 
-size_t Sequence::HammingDist(const Sequence& other){
+size_t NtSequence::HammingDist(const NtSequence& other){
 
 	size_t len = std::min(Seq.size(), other.Seq.size());
 	size_t dist = 0;
@@ -85,7 +68,7 @@ size_t Sequence::HammingDist(const Sequence& other){
 	return dist;
 }
 
-float Sequence::GCcontent () const{
+float NtSequence::GCcontent () const{
 
 	CntNt();
 	std::size_t sum = ntAmount.a;
@@ -99,7 +82,7 @@ float Sequence::GCcontent () const{
 	return (static_cast<float>(GCsum)/sum) * 100.0f;
 }
 
-std::vector<size_t> Sequence::FindMotiff(const std::string& motif) const{
+std::vector<size_t> NtSequence::FindMotiff(const std::string& motif) const{
 
 	std::vector<size_t> MottifIndexes;
 	if (motif.empty() || motif.length() > Seq.length())
@@ -114,14 +97,15 @@ std::vector<size_t> Sequence::FindMotiff(const std::string& motif) const{
 	return MottifIndexes;
 }
 
-std::vector<size_t> Sequence::FindMotiff(const Sequence& motif) const{
+std::vector<size_t> NtSequence::FindMotiff(const NtSequence& motif) const{
 	return FindMotiff(motif.get_seq());
 }
 
-const Sequence* Sequence::HighestGC(const std::vector<std::unique_ptr<Sequence>>& sequences){
+const NtSequence* NtSequence::HighestGC(const std::vector<std::unique_ptr<NtSequence>>& sequences){
 
 	if(sequences.empty())
 		return nullptr;
 	auto maxGCval = std::max_element(sequences.begin(), sequences.end(), CompareGC);
 	return maxGCval->get();
 }
+

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "sequence.hpp"
+#include "NtSequence.hpp"
 
-class RNA: public Sequence{
+class RNA: public NtSequence{
 public:
-	using Sequence::Sequence;
+	using NtSequence::NtSequence;
 	~RNA() = default;
 	Type getType() const override {return Type::RNA;}
 };

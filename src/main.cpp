@@ -3,9 +3,10 @@
 
 int main(){
 
-	Solution::FindMotiff();
-	Solution::GCcount();
-	Solution::HammingDist();
+	Solution::RabbitsRec();
+//	Solution::FindMotiff();
+//	Solution::GCcount();
+//	Solution::HammingDist();
 
 	return 0;
 }

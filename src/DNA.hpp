@@ -1,15 +1,15 @@
 #pragma once
 
-#include "sequence.hpp"
 #include "RNA.hpp"
+#include "NtSequence.hpp"
 #include <string>
 
-class DNA: public Sequence{
+class DNA: public NtSequence{
 	private:
 	std::string RunTranscript();
 
 public:
-	using Sequence::Sequence;
+	using NtSequence::NtSequence;
 	~DNA() = default;
 	std::unique_ptr<RNA> Transcribe();
 	Type getType() const override {return Type::DNA;}

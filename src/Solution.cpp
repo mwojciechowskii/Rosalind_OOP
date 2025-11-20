@@ -1,16 +1,16 @@
 #include "Solution.hpp"
 #include "DNA.hpp"
 #include "fileReader.hpp"
+#include <cstddef>
+#include <cstdio>
 #include <iomanip>
 #include <iostream>
 #include <memory>
-#include "sequence.hpp"
+#include "Sequence.hpp"
 
 using Type = Sequence::Type;
 
 void Solution::HammingDist(){
-
-
 	/* Problem:
 	https://rosalind.info/problems/hamm/
 	*/
@@ -29,13 +29,13 @@ void Solution::GCcount(){
 	https://rosalind.info/problems/gc/ 
 	*/
 	std::string file = "./data/rosalind_gc.txt";
-	auto opened_seq = fileReader::ReadFile(file, Type::DNA);
+	auto opened_seq = fileReader::ReadFile<NtSequence>(file, Type::DNA);
 	for (auto &sequence: opened_seq){
 
 		std::cout << std::fixed << std::setprecision(6);
 		std::cout << sequence->GCcontent() << std::endl;
 	}
-	const auto maxGC = Sequence::HighestGC(opened_seq);
+	const auto maxGC = NtSequence::HighestGC(opened_seq);
 
 	std::cout << maxGC->get_id() << std::endl;
     std::cout << std::fixed << std::setprecision(6) << maxGC->GCcontent() << '\n';
@@ -55,4 +55,32 @@ void Solution::FindMotiff(){
 	}
 	printf("\n");
 
+}
+
+void Solution::RabbitsRec(){
+
+	/* Problem:
+	https://rosalind.info/problems/fib/
+	*/
+	std::string file = "./data/rosalind_fib.txt";
+	auto op_file = fileReader::openFile(file);
+	size_t n{0}, k{0};
+	*op_file >> n >> k;
+
+	if (n <= 0){
+		std::cout << "0" << '\n';
+		return;
+	}
+	if (n == 1 || n == 2){
+		std::cout << "1" << '\n';
+		return;
+	}
+	size_t cur{0}, prev1{1}, prev2{1};
+	for (size_t i = 3; i <=n; i++){
+		cur = prev1 + k * prev2;
+        prev2 = prev1;
+        prev1 = cur;
+	}
+	std::cout << cur << std::endl;
+	return;
 }
