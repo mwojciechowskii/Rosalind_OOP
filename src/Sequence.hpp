@@ -1,10 +1,5 @@
 #pragma once
-#include <algorithm>
-#include <cstddef>
-#include <memory>
-#include <optional>
 #include <string>
-#include <vector>
 
 class Sequence{
 
@@ -13,7 +8,6 @@ class Sequence{
 		std::string Seq_ID;
 		std::string ID_info;
 		std::string Seq;
-		static bool CompareGC(const std::unique_ptr<Sequence>& seqA, const std::unique_ptr<Sequence>& seqB) {return seqA->GCcontent() < seqB->GCcontent();}
 
 	public:
 
@@ -27,20 +21,4 @@ class Sequence{
 		const std::string& get_idInfo() const {return ID_info;}
 		enum class Type {DNA, RNA, AAseq};
 		virtual Type getType() const = 0;
-
-		struct NtAmount{
-			std::size_t a{0}, c{0}, g{0};
-		    std::optional<std::size_t> t{}; 
-			std::optional<std::size_t> u{};
-		};
-		mutable NtAmount ntAmount;
-		mutable bool NtCounted = false;
-		NtAmount CntNt() const;
-		virtual std::string Complement();
-		float GCcontent() const;
-		size_t HammingDist(const Sequence& other);
-		std::vector<size_t> FindMotiff(const std::string& motif) const;
-		std::vector<size_t> FindMotiff(const Sequence& motif) const;
-		
-		static const Sequence* HighestGC(const std::vector<std::unique_ptr<Sequence>>& sequences);
 };

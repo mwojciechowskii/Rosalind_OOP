@@ -2,7 +2,8 @@ workdir :=$(shell pwd)
 CXX        := g++
 INCLUDES   :=
 SRCS       := $(workdir)/src/main.cpp \
-			  $(workdir)/src/sequence.cpp \
+			  $(workdir)/src/Sequence.cpp \
+			  $(workdir)/src/NtSequence.cpp \
 			  $(workdir)/src/DNA.cpp \
 			  $(workdir)/src/RNA.cpp \
 			  $(workdir)/src/fileReader.cpp \
@@ -10,7 +11,7 @@ SRCS       := $(workdir)/src/main.cpp \
 OBJS       := $(patsubst $(workdir)/src/%.cpp,$(workdir)/build/%.o,$(SRCS))
 TARGET     ?= myapp
 
-CXXFLAGS_DEBUG   := -g -O0 -std=c++20 -Wall
+CXXFLAGS_DEBUG   := -g -fsanitize=address,undefined -fno-omit-frame-pointer -O0 -std=c++20 -Wall
 CXXFLAGS_RELEASE := -O2 -std=c++20 -Wall
 
 CXXFLAGS := $(CXXFLAGS_RELEASE)

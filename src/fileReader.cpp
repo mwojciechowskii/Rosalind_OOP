@@ -4,7 +4,7 @@
 #include <cstdio>
 #include <iostream>
 #include <memory>
-#include "sequence.hpp"
+#include "Sequence.hpp"
 #include <string>
 #include <fstream>
 #include <utility>
@@ -20,16 +20,21 @@ std::shared_ptr<std::ifstream> fileReader::openFile(const std::string &file){
 	return op_file;
 }
 
-std::unique_ptr<Sequence> fileReader::createFromType(Sequence::Type type, std::string id, std::string id_info, std::string seq){
+template<typename T>
+std::unique_ptr<T> fileReader::createFromType(Sequence::Type type, std::string id, std::string id_info, std::string seq){
 
-if (type == Sequence::Type::DNA) return std::make_unique<DNA>(std::move(id), std::move(id_info), std::move(seq));
-if (type == Sequence::Type::RNA) return std::make_unique<RNA>(std::move(id), std::move(id_info), std::move(seq));
-return nullptr;
+	if (type == Sequence::Type::DNA) return std::make_unique<DNA>(std::move(id), std::move(id_info), std::move(seq));
+	if (type == Sequence::Type::RNA) return std::make_unique<RNA>(std::move(id), std::move(id_info), std::move(seq));
+	return nullptr;
 }
-//template<typename Sequence>
-std::vector<std::unique_ptr<Sequence>> fileReader::ReadFile(const std::string &file, Sequence::Type type){
 
-	std::vector<std::unique_ptr<Sequence>> results;
+template<typename T>
+using enable_if_sequence_t = std::enable_if_t<std::is_base_of_v<Sequence, T>, bool>;
+
+template<typename T>
+std::vector<std::unique_ptr<T>> fileReader::ReadFile(const std::string &file, Sequence::Type type){
+
+	std::vector<std::unique_ptr<T>> results;
 	auto op_file = fileReader::openFile(file);
 
 	if (!op_file)
@@ -42,7 +47,7 @@ std::vector<std::unique_ptr<Sequence>> fileReader::ReadFile(const std::string &f
 		if (line.empty()) continue;
 		if (line.starts_with('>')){
 			if (inSeq){
-				results.push_back(createFromType(type, std::move(id), std::move(id_info), std::move(seq)));
+				results.push_back(createFromType<T>(type, std::move(id), std::move(id_info), std::move(seq)));
 				seq.clear();
 			}
 			std::string header = line.substr(1);
@@ -63,16 +68,12 @@ std::vector<std::unique_ptr<Sequence>> fileReader::ReadFile(const std::string &f
 		}
 	}
 	if (inSeq){
-		results.push_back(createFromType(type, std::move(id), std::move(id_info), std::move(seq)));
+		results.push_back(createFromType<T>(type, std::move(id), std::move(id_info), std::move(seq)));
 	}
 	return results;
 }
 
-//template std::vector<std::unique_ptr<DNA>> 
-//fileReader::ReadFile<DNA>(const std::string&);
-//
-//template std::vector<std::unique_ptr<RNA>> 
-//fileReader::ReadFile<RNA>(const std::string&);
+template std::vector<std::unique_ptr<NtSequence>> fileReader::ReadFile<NtSequence>(const std::string &file, Sequence::Type type);
 
 
 std::vector<size_t> fileReader::ReadWithMotiff(const std::string &file, Sequence::Type type){
@@ -85,7 +86,7 @@ std::vector<size_t> fileReader::ReadWithMotiff(const std::string &file, Sequence
 	std::getline(*op_file, sequence);
 	std::getline(*op_file, motiff);
 	
-	std::unique_ptr<Sequence> MotifSeq;
+	std::unique_ptr<NtSequence> MotifSeq;
 	if (type == Sequence::Type::DNA){
 		MotifSeq = std::make_unique<DNA>(std::move(sequence));
 		return MotifSeq->FindMotiff(motiff);
