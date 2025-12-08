@@ -3,10 +3,7 @@
 
 int main(){
 
-	Solution::RabbitsRec();
-//	Solution::FindMotiff();
-//	Solution::GCcount();
-//	Solution::HammingDist();
+	Solution::MendelLaw();
 
 	return 0;
 }
