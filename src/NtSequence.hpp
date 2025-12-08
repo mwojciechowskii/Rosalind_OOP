@@ -5,8 +5,9 @@
 #include <vector>
 
 class NtSequence: public Sequence {
-	protected:
+protected:
 	static bool CompareGC(const std::unique_ptr<NtSequence>& seqA, const std::unique_ptr<NtSequence>& seqB) {return seqA->GCcontent() < seqB->GCcontent();}
+
 public:
 	using Sequence::Sequence;
 
@@ -24,6 +25,6 @@ public:
 	size_t HammingDist(const NtSequence& other);
 	std::vector<size_t> FindMotiff(const std::string& motif) const;
 	std::vector<size_t> FindMotiff(const NtSequence& motif) const;
-	
+
 	static const NtSequence* HighestGC(const std::vector<std::unique_ptr<NtSequence>>& sequences);
 };

@@ -84,3 +84,41 @@ void Solution::RabbitsRec(){
 	std::cout << cur << std::endl;
 	return;
 }
+
+float Solution::recessive_prob(size_t sum_outcomes, size_t hetero, size_t homo_rec){
+
+	float recessive_prob{0};
+
+	return recessive_prob;
+}
+
+void Solution::MendelLaw(){
+	
+	/* Problem:
+	https://rosalind.info/problems/iprb/
+	*/
+
+	std::string file = "./data/rosalind_iprb.txt";
+	auto op_file = fileReader::openFile(file);
+
+	// dominant, recessive and heterozygous
+	float Homo_dom{0}, Homo_rec{0}, Hetero{0};
+	*op_file >> Homo_dom >> Hetero >> Homo_rec;
+	
+	float pop_sum = Homo_dom + Homo_rec + Hetero;
+	float sumAll = pop_sum * (pop_sum - 1) / 2 ;
+
+	float allDominant = Homo_dom * (Homo_dom - 1) / 2;
+	float DominantHetero = Homo_dom * Hetero;
+	float DominantRecessive = Homo_dom * Homo_rec; 
+	float HeteroOnly = Hetero * (Hetero - 1) / 2;
+	float HeteroHomoRec = Hetero * Homo_rec;
+	//HomoRecessive wont add anything to the result
+
+	float probability = (allDominant + DominantHetero + DominantRecessive) / sumAll;
+
+	probability += (HeteroOnly * 3/4) / sumAll;
+	probability += (HeteroHomoRec * 1/2) / sumAll;
+
+	std::cout << probability << std::endl;
+}

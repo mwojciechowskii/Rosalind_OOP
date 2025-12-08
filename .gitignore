@@ -1,2 +1,3 @@
 build/
 myapp
+asan_report.txt
