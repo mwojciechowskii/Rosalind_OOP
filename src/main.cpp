@@ -4,6 +4,7 @@
 int main(){
 
 	Solution::MendelLaw();
+	Solution::Translation();
 
 	return 0;
 }

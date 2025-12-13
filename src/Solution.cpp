@@ -1,14 +1,11 @@
 #include "Solution.hpp"
-#include "DNA.hpp"
 #include "fileReader.hpp"
 #include <cstddef>
 #include <cstdio>
 #include <iomanip>
 #include <iostream>
 #include <memory>
-#include "Sequence.hpp"
-
-using Type = Sequence::Type;
+#include "DNA.hpp"
 
 void Solution::HammingDist(){
 
@@ -30,7 +27,7 @@ void Solution::GCcount(){
 	https://rosalind.info/problems/gc/ 
 	*/
 	std::string file = "./data/rosalind_gc.txt";
-	auto opened_seq = fileReader::ReadFile<NtSequence>(file, Type::DNA);
+	auto opened_seq = fileReader::ReadFile<DNA>(file);
 	for (auto &sequence: opened_seq){
 
 		std::cout << std::fixed << std::setprecision(6);
@@ -48,7 +45,7 @@ void Solution::FindMotiff(){
 	https://rosalind.info/problems/subs/
 	*/
 	std::string file = "./data/rosalind_subs.txt";
-	auto op_file = fileReader::ReadWithMotiff(file, Sequence::Type::DNA);
+	auto op_file = fileReader::ReadWithMotiff<DNA>(file);
 
 	for (size_t i = 0; i < op_file.size(); ++i) {
 		if (i > 0) std::cout << " ";
@@ -86,11 +83,9 @@ void Solution::RabbitsRec(){
 	return;
 }
 
-float Solution::recessive_prob(size_t sum_outcomes, size_t hetero, size_t homo_rec){
+double Solution::MendelHelper(double allele){
 
-	float recessive_prob{0};
-
-	return recessive_prob;
+	return allele * (allele - 1) / 2;
 }
 
 void Solution::MendelLaw(){
@@ -103,23 +98,40 @@ void Solution::MendelLaw(){
 	auto op_file = fileReader::openFile(file);
 
 	// dominant, recessive and heterozygous
-	float Homo_dom{0}, Homo_rec{0}, Hetero{0};
+	double Homo_dom{0}, Homo_rec{0}, Hetero{0};
 	*op_file >> Homo_dom >> Hetero >> Homo_rec;
 	
-	float pop_sum = Homo_dom + Homo_rec + Hetero;
-	float sumAll = pop_sum * (pop_sum - 1) / 2 ;
+	double pop_sum = Homo_dom + Homo_rec + Hetero;
+	double sumAll = MendelHelper(pop_sum);
 
-	float allDominant = Homo_dom * (Homo_dom - 1) / 2;
-	float DominantHetero = Homo_dom * Hetero;
-	float DominantRecessive = Homo_dom * Homo_rec; 
-	float HeteroOnly = Hetero * (Hetero - 1) / 2;
-	float HeteroHomoRec = Hetero * Homo_rec;
+	double allDominant = MendelHelper(Homo_dom);
+	double DominantHetero = Homo_dom * Hetero;
+	double DominantRecessive = Homo_dom * Homo_rec; 
+	double HeteroOnly = MendelHelper(Hetero);
+	double HeteroHomoRec = Hetero * Homo_rec;
 	//HomoRecessive wont add anything to the result
 
-	float probability = (allDominant + DominantHetero + DominantRecessive) / sumAll;
+	double probability = (allDominant + DominantHetero + DominantRecessive) / sumAll;
 
-	probability += (HeteroOnly * 3/4) / sumAll;
-	probability += (HeteroHomoRec * 1/2) / sumAll;
+	probability += (HeteroOnly * 0.75) / sumAll;
+	probability += (HeteroHomoRec * 0.5) / sumAll;
 
 	std::cout << probability << std::endl;
+}
+
+void Solution::Translation(){
+
+	std::string file = "./data/rosalind_prot.txt";
+	auto openedSeq = fileReader::ReadFile<RNA>(file);
+	std::vector<std::unique_ptr<aaSequence>> translatedSequence;
+	translatedSequence.reserve(openedSeq.size());
+
+	for (auto &sequence: openedSeq){
+
+		auto translated = sequence->Translate();
+
+		std::cout << translated->get_seq() << std::endl;
+		translatedSequence.push_back(std::move(translated));
+	} 
+
 }
