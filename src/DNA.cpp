@@ -39,4 +39,3 @@ std::unique_ptr<RNA> DNA::Transcribe(){
 	std::string id_info_copy = ID_info + "_Transcribed";
 	return std::make_unique<RNA>(std::move(id_copy), std::move(id_info_copy), std::move(RnaSeq));
 }
-

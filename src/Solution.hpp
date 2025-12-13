@@ -1,12 +1,10 @@
 #pragma once
 
-#include <cstddef>
 #include <ctime>
 
 class Solution {
-protected:
-	float recessive_prob(size_t , size_t hetero, size_t homo_rec);
-
+private:
+	static double MendelHelper(double allele);
 public:
 
 	static void HammingDist();
@@ -15,4 +13,5 @@ public:
 
 	static void RabbitsRec();
 	static void MendelLaw();
+	static void Translation();
 };
