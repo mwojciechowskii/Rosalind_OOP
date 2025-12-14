@@ -3,8 +3,7 @@
 
 int main(){
 
-	Solution::MendelLaw();
-	Solution::Translation();
+	Solution::CalcProteinMass();
 
 	return 0;
 }

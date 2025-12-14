@@ -14,4 +14,5 @@ public:
 	static void RabbitsRec();
 	static void MendelLaw();
 	static void Translation();
+	static void CalcProteinMass();
 };
