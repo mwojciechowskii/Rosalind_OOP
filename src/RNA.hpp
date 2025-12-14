@@ -1,16 +1,17 @@
 #pragma once
 
 #include "NtSequence.hpp"
-#include "AaSequence.hpp"
+#include "Translatable.hpp"
 #include <string>
 
-class RNA: public NtSequence{
+class RNA: public NtSequence, public Translatable{
 private:
-	std::string RunTranslation();
+	std::string RunTranslation() const;
 public:
 	using NtSequence::NtSequence;
 	~RNA() = default;
 	using BaseType = NtSequence;
 	Type getType() const override {return Type::RNA;}
-	std::unique_ptr<aaSequence> Translate() override;
+	std::unique_ptr<aaSequence> translate() const override;
+
 };

@@ -3,7 +3,7 @@
 #include "AaSequence.hpp"
 #include <memory>
 
-std::string RNA::RunTranslation(){
+std::string RNA::RunTranslation() const{
 
 	std::string seqAA;
 	for (std::size_t i = 0; i < Seq.length(); i += 3) {
@@ -19,7 +19,7 @@ std::string RNA::RunTranslation(){
 	return seqAA;
 }
 
-std::unique_ptr<aaSequence> RNA::Translate(){
+std::unique_ptr<aaSequence> RNA::translate() const{
 
 	std::string aaSeq = RunTranslation();
 	std::string id_copy = Seq_ID;

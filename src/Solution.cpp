@@ -1,5 +1,6 @@
 #include "Solution.hpp"
 #include "fileReader.hpp"
+#include "Translatable.hpp"
 #include <cstddef>
 #include <cstdio>
 #include <iomanip>
@@ -127,10 +128,10 @@ void Solution::Translation(){
 
 	for (auto &sequence: openedSeq){
 
-		auto translated = sequence->Translate();
-
-		std::cout << translated->get_seq() << std::endl;
-		translatedSequence.push_back(std::move(translated));
+		if (auto *t = dynamic_cast<Translatable*>(sequence.get())){
+			auto translated = t->translate();
+			std::cout << translated->get_seq() << std::endl;
+			translatedSequence.push_back(std::move(translated));
+		}
 	} 
-
 }

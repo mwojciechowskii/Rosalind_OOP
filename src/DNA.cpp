@@ -4,10 +4,9 @@
 #include <string>
 
 
-std::string DNA::RunTranscript() {
+std::string DNA::RunTranscript() const{
 
 	std::string Rna;
-
 	for (char nt : Seq) {
 		switch (nt) {
 			default:
@@ -33,7 +32,7 @@ std::string DNA::RunTranscript() {
 	return Rna;
 }
 
-std::unique_ptr<RNA> DNA::Transcribe(){
+std::unique_ptr<RNA> DNA::transcribe() const{
 	std::string RnaSeq = RunTranscript();
 	std::string id_copy = Seq_ID;
 	std::string id_info_copy = ID_info + "_Transcribed";
