@@ -6,5 +6,5 @@
 class Transcriptable {
 public:
     virtual ~Transcriptable() = default;
-	virtual std::unique_ptr<RNA> transcribe() const;
+	virtual std::unique_ptr<RNA> transcribe() const = 0;
 };

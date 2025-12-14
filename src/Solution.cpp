@@ -121,6 +121,9 @@ void Solution::MendelLaw(){
 
 void Solution::Translation(){
 
+	/* Problem:
+	https://rosalind.info/problems/prot/ 
+	*/
 	std::string file = "./data/rosalind_prot.txt";
 	auto openedSeq = fileReader::ReadFile<RNA>(file);
 	std::vector<std::unique_ptr<aaSequence>> translatedSequence;
@@ -134,4 +137,19 @@ void Solution::Translation(){
 			translatedSequence.push_back(std::move(translated));
 		}
 	} 
+}
+
+void Solution::CalcProteinMass(){
+
+	/* Problem:
+	https://rosalind.info/problems/prtm/
+	*/
+
+	std::string file = "./data/rosalind_prtm.txt";
+	auto openedSeq = fileReader::ReadFile<aaSequence>(file);
+	double weight = 0.0;
+	for (auto &sequence: openedSeq){
+		weight += sequence->weightCnt();
+	}
+	std::cout << std::fixed << std::setprecision(5) << weight << '\n';
 }

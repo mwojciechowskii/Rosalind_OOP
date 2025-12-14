@@ -85,4 +85,3 @@ std::vector<size_t> fileReader::ReadWithMotiff(const std::string &file){
 }
 template std::vector<size_t> fileReader::ReadWithMotiff<DNA>(const std::string&);
 template std::vector<size_t> fileReader::ReadWithMotiff<RNA>(const std::string&);
-

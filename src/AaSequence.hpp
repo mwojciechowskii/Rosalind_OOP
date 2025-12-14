@@ -8,4 +8,5 @@ public:
 	using BaseType = aaSequence;
 
     Type getType() const override {return Type::AAseq;}
+	double weightCnt();
 };
