@@ -2,18 +2,18 @@
 
 #include "RNA.hpp"
 #include "NtSequence.hpp"
+#include "Transcriptable.hpp"
 #include <string>
 
-class DNA: public NtSequence{
+class DNA: public NtSequence, public Transcriptable{
 	private:
-	std::string RunTranscript();
+	std::string RunTranscript() const;
 
 public:
 	using NtSequence::NtSequence;
 	using BaseType = NtSequence;
 	~DNA() = default;
-	std::unique_ptr<RNA> Transcribe();
+	std::unique_ptr<RNA> transcribe() const override;
 	Type getType() const override {return Type::DNA;}
 
-	virtual std::unique_ptr<aaSequence> Translate() override {return nullptr;}
 };
