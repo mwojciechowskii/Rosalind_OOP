@@ -1,5 +1,5 @@
 #include "RNA.hpp"
-#include "codonTable.hpp"
+#include "resources/codonTable.hpp"
 #include "AaSequence.hpp"
 #include <memory>
 

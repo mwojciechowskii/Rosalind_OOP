@@ -1,7 +1,7 @@
 #pragma once
 
 #include "NtSequence.hpp"
-#include "Translatable.hpp"
+#include "interface/Translatable.hpp"
 #include <string>
 
 class RNA: public NtSequence, public Translatable{

@@ -2,7 +2,7 @@
 
 #include "RNA.hpp"
 #include "NtSequence.hpp"
-#include "Transcriptable.hpp"
+#include "interface/Transcriptable.hpp"
 #include <string>
 
 class DNA: public NtSequence, public Transcriptable{

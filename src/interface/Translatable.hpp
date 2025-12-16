@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AaSequence.hpp"
+#include "../AaSequence.hpp"
 #include <memory>
 
 class Translatable {
