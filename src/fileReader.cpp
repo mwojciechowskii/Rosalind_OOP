@@ -153,3 +153,76 @@ std::vector<std::unique_ptr<typename T::BaseType>> fileReader::ReadFile(const st
 template std::vector<std::unique_ptr<NtSequence>> fileReader::ReadFile<DNA>(const std::string&);
 template std::vector<std::unique_ptr<NtSequence>> fileReader::ReadFile<RNA>(const std::string&);
 template std::vector<std::unique_ptr<aaSequence>> fileReader::ReadFile<aaSequence>(const std::string&);
+
+template <typename T>
+std::vector<std::unique_ptr<typename T::BaseType>> fileReader::ReadFromString(const std::string &file){
+
+	std::vector<std::unique_ptr<typename T::BaseType>> results;
+	std::istringstream stream(file);
+
+	std::string id_info, line, id, seq;
+
+	bool inSeq = false;
+	bool plainMode = false;
+	size_t plainCounter = 0;
+
+	while (std::getline(stream, line) ) {
+		if (line.empty()) continue;
+		if (!inSeq && !plainMode){
+			if (line.starts_with('>')){
+				plainMode = false;
+			}else{
+				plainMode = true;
+				seq = line;
+				inSeq = true;
+				continue;
+			}
+		}
+	if (!plainMode){
+		if (line.starts_with('>')){
+			addRecord<T>(results, id, id_info, seq, plainCounter);
+			std::string header = line.substr(1);
+			std::size_t pos = header.find_first_of(" \t");
+			if (pos != std::string::npos) {
+				id = header.substr(0, pos);
+				id_info = header.substr(pos + 1);
+			} else {
+				id = std::move(header);
+				id_info.clear();
+			}
+			inSeq = true;
+		} else {
+			if (inSeq)
+				seq += line;
+		}
+		continue;
+	}
+		bool isWhitespace = false;
+        for (char c : line) {
+            if (std::isspace(static_cast<unsigned char>(c))) {
+                isWhitespace = true;
+                break;
+            }
+        }
+	if (isWhitespace){
+		addRecord<T>(results, id, id_info, seq, plainCounter);
+		size_t firstNonWs = line.find_first_not_of(" \t");
+		if (firstNonWs != std::string::npos) {
+			seq = line.substr(firstNonWs);
+			inSeq = true;
+		} else {
+			inSeq = false;
+            }
+        } else {
+            seq += line;
+            inSeq = true;
+        }
+    }
+    addRecord<T>(results, id, id_info, seq, plainCounter);
+
+    return results;
+}
+
+template std::vector<std::unique_ptr<NtSequence>> fileReader::ReadFromString<DNA>(const std::string&);
+template std::vector<std::unique_ptr<NtSequence>> fileReader::ReadFromString<RNA>(const std::string&);
+template std::vector<std::unique_ptr<aaSequence>> fileReader::ReadFromString<aaSequence>(const std::string&);

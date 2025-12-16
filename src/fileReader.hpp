@@ -20,4 +20,6 @@ public:
 	template<typename T>
 	static std::vector<size_t> ReadWithMotiff(const std::string &file);
 
+	template <typename T>
+	static std::vector<std::unique_ptr<typename T::BaseType>> ReadFromString(const std::string &file);
 };

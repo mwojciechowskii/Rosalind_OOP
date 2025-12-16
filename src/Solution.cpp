@@ -1,11 +1,16 @@
 #include "Solution.hpp"
 #include "fileReader.hpp"
+#include "AaSequence.hpp"
 #include <cstddef>
 #include <cstdio>
 #include <iomanip>
 #include <iostream>
 #include <memory>
+#include <optional>
+#include <string>
+#include <utility>
 #include "DNA.hpp"
+#include "Request.hpp"
 
 void Solution::HammingDist(){
 	/* Problem:
@@ -154,4 +159,45 @@ void Solution::CalcProteinMass(){
 		weight += sequence->weightCnt();
 	}
 	std::cout << std::fixed << std::setprecision(5) << weight << '\n';
+}
+
+//TODO TRIM INPUT SEQ
+void Solution::FindProtMotiff(){
+
+	/* Problem:
+	https://rosalind.info/problems/mprt/
+	*/
+	std::string file = "data/rosalind_mprt.txt";
+	auto protIDS = fileReader::simpleRead(file);
+	std::string url = "http://www.uniprot.org/uniprot/";
+
+	std::istringstream stream(*protIDS);
+	std::string curID;
+
+	std::vector<std::unique_ptr<aaSequence>> sequences;
+
+	Request proteinFetch(url); 
+
+	while(std::getline(stream, curID)){
+		if (curID.empty()) continue;
+		auto responseTmp = proteinFetch.fetchFasta(curID);
+
+		if (!responseTmp){
+			std::cerr << "Fetching fasta failed for: " << curID << std::endl;
+			continue;
+		}
+		std::string response = std::move(*responseTmp);
+		sequences = fileReader::ReadFromString<aaSequence>(std::move(response));
+
+		for (auto &seq: sequences){
+			auto indexes = seq->NGlyMotiff();
+			if (!indexes.empty()){
+				std::cout << seq->get_id() << std::endl; 
+				for (size_t i: indexes){
+					std::cout << i << " "; 
+				}
+				std::cout << '\n';
+			}
+		}
+	}
 }

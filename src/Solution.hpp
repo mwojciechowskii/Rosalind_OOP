@@ -15,4 +15,5 @@ public:
 	static void MendelLaw();
 	static void Translation();
 	static void CalcProteinMass();
+	static void FindProtMotiff();
 };
