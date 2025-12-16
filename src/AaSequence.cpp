@@ -1,4 +1,4 @@
-#include "aminoAcidsWeight.hpp"
+#include "resources/aminoAcidsWeight.hpp"
 #include "AaSequence.hpp"
 #include <unordered_map>
 

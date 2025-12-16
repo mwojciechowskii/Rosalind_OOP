@@ -1,7 +1,7 @@
 #pragma once
 
 #include <memory>
-#include "RNA.hpp"
+#include "../RNA.hpp"
 
 class Transcriptable {
 public:

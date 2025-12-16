@@ -3,7 +3,6 @@
 #include <memory>
 #include <string>
 
-
 std::string DNA::RunTranscript() const{
 
 	std::string Rna;

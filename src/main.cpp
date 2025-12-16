@@ -1,9 +1,11 @@
 #include "Solution.hpp"
 #include <cstdio>
+#include <curl/curl.h>
 
 int main(){
 
-	Solution::CalcProteinMass();
+	Solution::Translation();
+	Solution::HammingDist();
 
 	return 0;
 }
