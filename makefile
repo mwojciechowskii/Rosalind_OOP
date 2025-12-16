@@ -8,7 +8,8 @@ SRCS       := $(workdir)/src/main.cpp \
 			  $(workdir)/src/RNA.cpp \
 			  $(workdir)/src/fileReader.cpp \
 			  $(workdir)/src/Solution.cpp \
-			  $(workdir)/src/AaSequence.cpp
+			  $(workdir)/src/AaSequence.cpp \
+			  $(workdir)/src/Request.cpp
 OBJS       := $(patsubst $(workdir)/src/%.cpp,$(workdir)/build/%.o,$(SRCS))
 TARGET     ?= myapp
 
@@ -19,14 +20,24 @@ CXXFLAGS := $(CXXFLAGS_RELEASE)
 
 .PHONY: all debug release clean run
 
+CURL_CFLAGS := $(shell pkg-config --cflags libcurl 2>/dev/null || echo $(shell curl-config --cflags 2>/dev/null))
+CURL_LIBS   := $(shell pkg-config --libs libcurl 2>/dev/null || echo $(shell curl-config --libs 2>/dev/null))
+
+OTHER_LIBS  := -lboost_regex
+
+INCLUDES += $(CURL_CFLAGS)
+
+LDFLAGS := $(CURL_LIBS)
+LIBS    := $(OTHER_LIBS)
+
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS) $(LIBS)
 
 $(workdir)/build/%.o: $(workdir)/src/%.cpp
 	@mkdir -p $(workdir)/build
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 debug: CXXFLAGS := $(CXXFLAGS_DEBUG)
 debug: clean all
@@ -38,4 +49,4 @@ run: all
 	./$(TARGET)
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJS) $(TARGET)

@@ -4,8 +4,7 @@
 
 int main(){
 
-	Solution::Translation();
-	Solution::HammingDist();
+	Solution::FindProtMotiff();
 
 	return 0;
 }
