@@ -31,4 +31,4 @@ make run
 ```
 > Don't mind chaotic makefile
 
-Keep in mind that running this it will out Finding a Protein Motif only by default!
+Keep in mind that running this will out Finding a Protein Motif only, by default!
