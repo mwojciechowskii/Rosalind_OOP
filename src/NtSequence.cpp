@@ -98,7 +98,7 @@ std::vector<size_t> NtSequence::FindMotiff(const std::string& motif) const{
 }
 
 std::vector<size_t> NtSequence::FindMotiff(const NtSequence& motif) const{
-	return FindMotiff(motif.get_seq());
+	return FindMotiff(motif.getSeq());
 }
 
 const NtSequence* NtSequence::HighestGC(const std::vector<std::unique_ptr<NtSequence>>& sequences){
@@ -109,3 +109,28 @@ const NtSequence* NtSequence::HighestGC(const std::vector<std::unique_ptr<NtSequ
 	return maxGCval->get();
 }
 
+std::string NtSequence::parseIntron(const std::string &intron, std::string cutSeq){
+
+	size_t intronLen = intron.length();
+
+	auto startingIndex = cutSeq.find(intron);
+	if (startingIndex != std::string::npos){
+		cutSeq.erase(startingIndex, intronLen);
+	}else{
+		std::cerr << "Could not find the intron: " << intron << std::endl;
+	}
+	return cutSeq;
+}
+
+std::unique_ptr<NtSequence> NtSequence::cutIntrons(const std::vector<std::unique_ptr<NtSequence>> &introns){
+
+	std::string cutSeq = Seq;
+	for (auto &intron: introns){
+		const std::string intronSeq = intron->getSeq();
+		cutSeq = parseIntron(intronSeq, cutSeq);
+
+	}
+	std::string idCopy = Seq_ID;
+	std::string infoCopy = ID_info;
+	return makeRes(idCopy, infoCopy, cutSeq);
+}

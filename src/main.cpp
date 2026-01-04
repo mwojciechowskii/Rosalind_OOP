@@ -4,7 +4,7 @@
 
 int main(){
 
-	Solution::FindProtMotiff();
+	Solution::cutIntrons();
 
 	return 0;
 }

@@ -2,6 +2,7 @@
 #include "resources/codonTable.hpp"
 #include "AaSequence.hpp"
 #include <memory>
+#include <vector>
 
 std::string RNA::RunTranslation() const{
 
