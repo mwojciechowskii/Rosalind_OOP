@@ -5,6 +5,7 @@
 class Solution {
 private:
 	static double MendelHelper(double allele);
+
 public:
 
 	static void HammingDist();
@@ -16,4 +17,6 @@ public:
 	static void Translation();
 	static void CalcProteinMass();
 	static void FindProtMotiff();
+
+	static void cutIntrons();
 };

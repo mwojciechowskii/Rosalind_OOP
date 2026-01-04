@@ -3,12 +3,15 @@
 #include "AaSequence.hpp"
 #include <cstddef>
 #include <cstdio>
+#include "interface/Transcriptable.hpp"
+#include "interface/Translatable.hpp"
 #include <iomanip>
 #include <iostream>
 #include <memory>
 #include <optional>
 #include <string>
 #include <utility>
+#include <vector>
 #include "DNA.hpp"
 #include "Request.hpp"
 
@@ -42,7 +45,7 @@ void Solution::GCcount(){
 	}
 	const auto maxGC = NtSequence::HighestGC(opened_seq);
 
-	std::cout << maxGC->get_id() << std::endl;
+	std::cout << maxGC->getID() << std::endl;
     std::cout << std::fixed << std::setprecision(6) << maxGC->GCcontent() << '\n';
 }
 
@@ -140,7 +143,7 @@ void Solution::Translation(){
 
 		if (auto *t = dynamic_cast<Translatable*>(sequence.get())){
 			auto translated = t->translate();
-			std::cout << translated->get_seq() << std::endl;
+			std::cout << translated->getSeq() << std::endl;
 			translatedSequence.push_back(std::move(translated));
 		}
 	} 
@@ -192,7 +195,7 @@ void Solution::FindProtMotiff(){
 		for (auto &seq: sequences){
 			auto indexes = seq->NGlyMotiff();
 			if (!indexes.empty()){
-				std::cout << seq->get_id() << std::endl; 
+				std::cout << seq->getID() << std::endl; 
 				for (size_t i: indexes){
 					std::cout << i << " "; 
 				}
@@ -200,4 +203,32 @@ void Solution::FindProtMotiff(){
 			}
 		}
 	}
+}
+
+void Solution::cutIntrons(){
+
+	/* Problem:
+	https://rosalind.info/problems/splc/
+	*/
+	std::string file = "./data/rosalind_splc.txt";
+
+	auto openedSeq = fileReader::ReadFile<DNA>(file);
+
+	std::vector<std::unique_ptr<NtSequence>> transIntrons;
+	for (auto &seq: openedSeq){
+		if (auto *p = dynamic_cast<Transcriptable*>(seq.get())){
+			std::unique_ptr<RNA> rna = p->transcribe();
+			transIntrons.push_back(std::move(rna));
+		}else
+			std::cerr << "Input is not transcriptable" << std::endl;
+	}
+	std::unique_ptr<NtSequence> sequence = std::move(transIntrons.front());
+	transIntrons.erase(transIntrons.begin());
+	auto semiResult = sequence->cutIntrons(transIntrons);
+
+	if (auto *p = dynamic_cast<Translatable*>(semiResult.get())){
+		auto protein = p->translate();
+		std::cout << protein->getSeq() << std::endl;
+	}else
+		std::cerr << "Could not translate the sequence" << std::endl;
 }
