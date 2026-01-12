@@ -68,7 +68,7 @@ size_t NtSequence::HammingDist(const NtSequence& other){
 	return dist;
 }
 
-float NtSequence::GCcontent () const{
+double NtSequence::GCcontent () const{
 
 	CntNt();
 	std::size_t sum = ntAmount.a;
@@ -79,7 +79,7 @@ float NtSequence::GCcontent () const{
 		sum += *ntAmount.u;
 	}
 	sum += GCsum;
-	return (static_cast<float>(GCsum)/sum) * 100.0f;
+	return (static_cast<double>(GCsum)/sum) * 100.0f;
 }
 
 std::vector<size_t> NtSequence::FindMotiff(const std::string& motif) const{

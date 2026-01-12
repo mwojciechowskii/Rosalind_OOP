@@ -23,7 +23,7 @@ public:
 	mutable bool NtCounted = false;
 	NtAmount CntNt() const;
 	virtual std::string Complement();
-	float GCcontent() const;
+	double GCcontent() const;
 	size_t HammingDist(const NtSequence& other);
 	std::vector<size_t> FindMotiff(const std::string& motif) const;
 	std::vector<size_t> FindMotiff(const NtSequence& motif) const;
