@@ -21,14 +21,22 @@ sudo apt install libcurl4-gnutls-dev
 
 ### How to run
 
+C++20 is required to compile
 ```shell
 make
-./myapp
+./myapp -d
 ```
-OR
+
 ```shell
-make run
+./myapp --help
+Rosalind solutions
+Allows to see my rosalind progress
+ Usage:         |        [options]
+  -h, --help            Show help message
+  -d, --default         allows to run program with predefined inputs
+  -i                    first input file to be provided
+  -I                    second input file to be provided
 ```
+
 > Don't mind chaotic makefile
 
-Keep in mind that running this will out Finding a Protein Motif only, by default!

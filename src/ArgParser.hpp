@@ -11,7 +11,8 @@ using namespace std;
 
 class ArgParser {
 private:
-	struct Argvs {
+	struct Argv {
+		string argName;
         string shortName;
         string longName;  
         string help;
@@ -19,21 +20,23 @@ private:
         bool hasArg = false;
         bool present = false;
     };
-	vector<Argvs> options;
+	vector<Argv> options;
+	string progName;
 	string pDesc;
-	int firstPosIndex = 0;
 
 public:
-    ArgParser(string description = "", bool addHelp = false): pDesc(std::move(description)){
-		if (addHelp){ addArgument("h", "help", "Show help message");}
+    ArgParser(string progName, string description = "", bool addHelp = false): progName(std::move(progName)), pDesc(std::move(description)){
+		if (addHelp){ addArgument("help", "h", "help", "Show help message");}
 	}; 
     ~ArgParser() = default; 
 
 	string get(const string& name) const;
-	void addArgument(const string &shortName, const string &longName, const string &helpMes, bool hasArg = false);
+	void addArgument(const string &argName, const string &shortName, const string &longName, const string &helpMes, bool hasArg = false);
 	void parseArgs(int argc, char** argv);
 	void printHelp(const string &name);
-	int firstPositionalIndex() const { return firstPosIndex; }
+
+	const Argv* findArg(const string &name) const;
 	string stripArg(const string_view s);
+	bool isPresent(const string &name) const;
 
 };

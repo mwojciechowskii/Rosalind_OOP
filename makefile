@@ -9,7 +9,8 @@ SRCS       := $(workdir)/src/main.cpp \
 			  $(workdir)/src/fileReader.cpp \
 			  $(workdir)/src/Solution.cpp \
 			  $(workdir)/src/AaSequence.cpp \
-			  $(workdir)/src/Request.cpp
+			  $(workdir)/src/Request.cpp \
+			  $(workdir)/src/ArgParser.cpp
 OBJS       := $(patsubst $(workdir)/src/%.cpp,$(workdir)/build/%.o,$(SRCS))
 TARGET     ?= myapp
 
