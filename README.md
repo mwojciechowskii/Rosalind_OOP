@@ -28,7 +28,7 @@ make
 ```
 
 ```shell
-./myapp --help
+./rosSolver --help
 Rosalind solutions
 Allows to see my rosalind progress
  Usage:         |        [options]
