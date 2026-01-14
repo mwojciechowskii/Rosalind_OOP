@@ -12,7 +12,7 @@ SRCS       := $(workdir)/src/main.cpp \
 			  $(workdir)/src/Request.cpp \
 			  $(workdir)/src/ArgParser.cpp
 OBJS       := $(patsubst $(workdir)/src/%.cpp,$(workdir)/build/%.o,$(SRCS))
-TARGET     ?= myapp
+TARGET     ?= rosSolver
 
 CXXFLAGS_DEBUG   := -g -fsanitize=address,undefined -O0 -std=c++20 -Wall
 CXXFLAGS_RELEASE := -O2 -std=c++20 -Wall

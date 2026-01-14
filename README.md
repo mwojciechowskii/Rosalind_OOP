@@ -24,7 +24,7 @@ sudo apt install libcurl4-gnutls-dev
 C++20 is required to compile
 ```shell
 make
-./myapp -d
+./rosSolver -d
 ```
 
 ```shell
